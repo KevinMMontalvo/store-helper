@@ -25,17 +25,36 @@ export default {
 	},
 	created()
 	{
-		navigator.mediaDevices.enumerateDevices().then(devices =>
-		{
-			for (let i = 0; i < devices.length; i++)
+		const codeReader = new ZXing.BrowserBarcodeReader();
+
+
+		codeReader.getVideoInputDevices()
+			.then((videoInputDevices) =>
 			{
-				if (devices[i].kind === 'videoinput')
+				console.log(videoInputDevices);
+				const sourceSelect = document.getElementById('sourceSelect');
+				//selectedDeviceId = videoInputDevices[0].deviceId;
+				if (videoInputDevices.length > 1)
 				{
-					console.log(devices[i]);
-					this.$data.videoInputs.push({label: devices[i].label, value: devices[i].deviceId});
+					videoInputDevices.forEach((element) =>
+					{
+						console.log(element);
+						/*const sourceOption = document.createElement('option');
+						sourceOption.text = element.label;
+						sourceOption.value = element.deviceId;
+						sourceSelect.appendChild(sourceOption);*/
+					});
+
+					sourceSelect.onchange = () =>
+					{
+						//selectedDeviceId = sourceSelect.value;
+					};
+
+					const sourceSelectPanel = document.getElementById('sourceSelectPanel');
+					sourceSelectPanel.style.display = 'block';
 				}
-			}
-		});
+
+			});
 	}
 };
 </script>
