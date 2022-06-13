@@ -1,17 +1,22 @@
 <template>
 	<div>
-		<v-select :items="videoInputs" label="label" value="deviceId"></v-select>
+		<v-btn v-if="videoInputs.length > 1" color="primary" @click="nextDevice">Cambio de camara</v-btn>
+		<v-select v-model="videoInput" class="d-none" :items="videoInputs" item-text="label" item-value="deviceId"
+				  @input="startScan"></v-select>
+		<div>
+			<video id="video" width="600" height="400" style="border: 1px solid gray"></video>
+		</div>
 	</div>
 </template>
 
 <script>
-import {MultiFormatReader, BarcodeFormat, BrowserBarcodeReader} from '@zxing/library';
-
 export default {
 	name: "Barcode",
 	data: () => ({
 		codeReader: null,
-		videoInputs: []
+		videoInputs: [],
+		videoInput: null,
+		videoInputIndex: 0
 	}),
 	methods: {
 		onDecode(result)
@@ -21,40 +26,61 @@ export default {
 		onLoaded(result)
 		{
 			console.log(result);
+		},
+		startScan()
+		{
+			this.codeReader.decodeOnceFromVideoDevice(this.videoInput.deviceId, 'video').then((result) =>
+			{
+				console.log(result);
+				//document.getElementById('result').textContent = result.text
+			}).catch((err) =>
+			{
+				console.error(err);
+				//document.getElementById('result').textContent = err
+			});
+			console.log(`Started continous decode from camera with id ${this.videoInput.deviceId}`);
+		},
+		nextDevice()
+		{
+			this.videoInputIndex++;
+			if (this.videoInputIndex === this.videoInputs.length)
+			{
+				this.videoInputIndex = 0;
+			}
+			this.codeReader.reset();
+			console.log(this.videoInputs[this.videoInputIndex]);
+			this.codeReader.decodeOnceFromVideoDevice(this.videoInputs[this.videoInputIndex].deviceId, 'video').then((result) =>
+			{
+				console.log(result);
+				//document.getElementById('result').textContent = result.text
+			}).catch((err) =>
+			{
+				console.error(err);
+				//document.getElementById('result').textContent = err
+			});
 		}
 	},
-	created()
+	async created()
 	{
-		const codeReader = new ZXing.BrowserBarcodeReader();
+		this.codeReader = new ZXing.BrowserBarcodeReader();
+		const constraints = {
+			audio: false,
+			video: true
+		};
+		await navigator.mediaDevices.getUserMedia(constraints);
 
-
-		codeReader.getVideoInputDevices()
-			.then((videoInputDevices) =>
+		navigator.mediaDevices.enumerateDevices().then(devices =>
+		{
+			for (let i = 0; i < devices.length; i++)
 			{
-				console.log(videoInputDevices);
-				const sourceSelect = document.getElementById('sourceSelect');
-				//selectedDeviceId = videoInputDevices[0].deviceId;
-				if (videoInputDevices.length > 1)
+				if (devices[i].kind === "videoinput")
 				{
-					videoInputDevices.forEach((element) =>
-					{
-						console.log(element);
-						/*const sourceOption = document.createElement('option');
-						sourceOption.text = element.label;
-						sourceOption.value = element.deviceId;
-						sourceSelect.appendChild(sourceOption);*/
-					});
-
-					sourceSelect.onchange = () =>
-					{
-						//selectedDeviceId = sourceSelect.value;
-					};
-
-					const sourceSelectPanel = document.getElementById('sourceSelectPanel');
-					sourceSelectPanel.style.display = 'block';
+					this.videoInputs.push({label: devices[i].label, deviceId: devices[i].deviceId});
 				}
+			}
+			this.nextDevice();
+		});
 
-			});
 	}
 };
 </script>
