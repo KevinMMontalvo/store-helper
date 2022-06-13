@@ -6,6 +6,7 @@
 		<div>
 			<video id="video" width="600" height="400" style="border: 1px solid gray"></video>
 		</div>
+		{{result}}
 	</div>
 </template>
 
@@ -16,7 +17,8 @@ export default {
 		codeReader: null,
 		videoInputs: [],
 		videoInput: null,
-		videoInputIndex: 0
+		videoInputIndex: 0,
+		result:{}
 	}),
 	methods: {
 		onDecode(result)
