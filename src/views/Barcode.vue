@@ -53,6 +53,7 @@ export default {
 			console.log(this.videoInputs[this.videoInputIndex]);
 			this.codeReader.decodeOnceFromVideoDevice(this.videoInputs[this.videoInputIndex].deviceId, 'video').then((result) =>
 			{
+				this.result = result;
 				console.log(result);
 				//document.getElementById('result').textContent = result.text
 			}).catch((err) =>
@@ -64,7 +65,7 @@ export default {
 	},
 	async created()
 	{
-		this.codeReader = new ZXing.BrowserBarcodeReader();
+		this.codeReader = new ZXing.BrowserMultiFormatReader();
 		const constraints = {
 			audio: false,
 			video: true
