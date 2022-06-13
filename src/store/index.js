@@ -1,17 +1,25 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from 'vue';
+import Vuex from 'vuex';
+import stores from "@/store/modules/stores";
+import products from "@/store/modules/products";
+import productByStores from "@/store/modules/productByStores";
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {
-  },
-  getters: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
-  modules: {
-  }
-})
+    state: {
+        message: {
+            visible: false,
+            text: '',
+            color: 'primary'
+        }
+    },
+    getters: {},
+    mutations: {},
+    actions: {},
+    modules: {
+        stores,
+        products,
+        productByStores
+    }
+});
