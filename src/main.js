@@ -12,9 +12,9 @@ Vue.config.productionTip = false
 vuetify.framework.lang.current = "es";
 
 vuetify.framework.lang.locales = {es};
-axios.defaults.baseURL = 'https://localhost:7059/api/';
+//axios.defaults.baseURL = 'https://localhost:7059/api/';
+axios.defaults.baseURL = 'https://store-helper-api.herokuapp.com/api/';
 
-//axios.defaults.baseURL = 'https://autorepuestos-api.herokuapp.com/';
 Vue.use(VueCookies);
 Vue.use(VueZxingScanner);
 

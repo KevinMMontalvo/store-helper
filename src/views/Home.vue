@@ -32,6 +32,9 @@
 			<v-app-bar-nav-icon @click.stop="menuVisible = !menuVisible"></v-app-bar-nav-icon>
 			<v-toolbar-title>Panel de administración</v-toolbar-title>
 			<v-spacer/>
+			<v-btn v-if="this.$cookies.get('profile') !=='Administrador'" icon @click="logout">
+				<v-icon>mdi-exit-to-app</v-icon>
+			</v-btn>
 		</v-app-bar>
 		<v-main>
 			<component v-bind:is="currentContent"/>
@@ -56,6 +59,22 @@ export default {
 		{
 			this.currentContent = module;
 			this.menuVisible = false;
+		},
+		logout()
+		{
+			this.$cookies.remove("profile");
+			this.$router.push('/');
+		},
+	},
+	beforeMount()
+	{
+		let cookies = this.$cookies;
+		let router = this.$router;
+
+		if (!cookies.isKey('profile'))
+		{
+			cookies.remove("profile");
+			router.push('/');
 		}
 	}
 };

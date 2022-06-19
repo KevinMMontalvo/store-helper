@@ -84,6 +84,13 @@ export default {
 				data.executing = false;
 			});
 		}
+	},
+	beforeCreate()
+	{
+		if (!!this.$cookies.get('profile'))
+		{
+			this.$router.push('main');
+		}
 	}
 };
 </script>
