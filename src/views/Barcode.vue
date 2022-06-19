@@ -66,6 +66,7 @@ export default {
 		{
 
 			// Handle on success condition with the decoded text or result.
+			this.result = `Scan result: ${decodedText}`;
 			console.log(`Scan result: ${decodedText}`, decodedResult);
 			this.html5QrcodeScanner.clear();
 		},
