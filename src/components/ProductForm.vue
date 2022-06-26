@@ -21,7 +21,7 @@
 			</v-card-text>
 			<v-card-actions>
 				<v-spacer></v-spacer>
-				<v-btn color="primary" text @click="">
+				<v-btn v-if="false" color="primary" text @click="">
 					<v-icon right dark>mdi-camera-flip</v-icon>
 				</v-btn>
 				<v-btn color="primary" text @click="startScan">Escaner</v-btn>
