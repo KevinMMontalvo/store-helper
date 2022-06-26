@@ -157,13 +157,22 @@ export default {
 				refs.form.clear();
 			}).catch(function (error)
 			{
-				console.error(error);
-				console.error(error.response);
-				store.state.message = {
-					visible: true,
-					text: 'Hubo un error al crear el producto',
-					color: 'error'
-				};
+				if (error.response.status === 400)
+				{
+					store.state.message = {
+						visible: true,
+						text: error.response.data,
+						color: 'error'
+					};
+				}
+				else
+				{
+					store.state.message = {
+						visible: true,
+						text: 'Hubo un error al crear el producto',
+						color: 'error'
+					};
+				}
 			}).then(function ()
 			{
 				data.executing = false;
@@ -191,11 +200,23 @@ export default {
 			}).catch(function (error)
 			{
 				console.error(error.response);
-				store.state.message = {
-					visible: true,
-					text: 'Hubo un error al modificar el producto',
-					color: 'error'
-				};
+
+				if (error.response.status === 400)
+				{
+					store.state.message = {
+						visible: true,
+						text: error.response.data,
+						color: 'error'
+					};
+				}
+				else
+				{
+					store.state.message = {
+						visible: true,
+						text: 'Hubo un error al modificar el producto',
+						color: 'error'
+					};
+				}
 			}).then(function ()
 			{
 				data.executing = false;
