@@ -26,6 +26,14 @@
 						<v-list-item-title>Cupones</v-list-item-title>
 					</v-list-item-content>
 				</v-list-item>
+				<v-list-item @click="swapModule('CouponCategories')">
+					<v-list-item-action>
+						<v-icon>mdi-ticket-percent</v-icon>
+					</v-list-item-action>
+					<v-list-item-content>
+						<v-list-item-title>Categorías de cupón</v-list-item-title>
+					</v-list-item-content>
+				</v-list-item>
 			</v-list>
 		</v-navigation-drawer>
 		<v-app-bar app color="primary" dark>
@@ -46,10 +54,11 @@
 
 import Stores from "@/components/Stores";
 import Products from "@/components/Products";
+import CouponCategories from "@/components/CouponCategories";
 
 export default {
 	name: 'Home',
-	components: {Stores, Products},
+	components: {Stores, Products, CouponCategories},
 	data: () => ({
 		menuVisible: false,
 		currentContent: '',

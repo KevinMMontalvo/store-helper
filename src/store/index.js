@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import stores from "@/store/modules/stores";
 import products from "@/store/modules/products";
 import productByStores from "@/store/modules/productByStores";
+import couponCategory from "@/store/modules/couponCategory";
 
 Vue.use(Vuex);
 
@@ -20,6 +21,7 @@ export default new Vuex.Store({
     modules: {
         stores,
         products,
-        productByStores
+        productByStores,
+        couponCategory
     }
 });
