@@ -21,6 +21,9 @@
 			</v-card-text>
 			<v-card-actions>
 				<v-spacer></v-spacer>
+				<v-btn color="primary" text @click="">
+					<v-icon right dark>mdi-camera-flip</v-icon>
+				</v-btn>
 				<v-btn color="primary" text @click="startScan">Escaner</v-btn>
 				<v-btn color="primary" text @click="close">Cancelar</v-btn>
 				<v-btn color="primary" :loading="executing" @click="save" :disabled="!valid">Guardar</v-btn>
@@ -146,7 +149,7 @@ export default {
 			if (devices && devices.length)
 			{
 				console.log(devices);
-				this.cameraId = devices[0].id;
+				this.cameraId = devices[devices.length-1].id;
 				// .. use this to start scanning.
 			}
 		}).catch(err =>
