@@ -4,6 +4,7 @@ import stores from "@/store/modules/stores";
 import products from "@/store/modules/products";
 import productByStores from "@/store/modules/productByStores";
 import couponCategory from "@/store/modules/couponCategory";
+import coupons from "@/store/modules/coupons";
 
 Vue.use(Vuex);
 
@@ -22,6 +23,7 @@ export default new Vuex.Store({
         stores,
         products,
         productByStores,
-        couponCategory
+        couponCategory,
+        coupons
     }
 });

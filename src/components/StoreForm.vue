@@ -34,10 +34,6 @@ export default {
 			{
 				return !!value || 'Este campo es obligatorio';
 			},
-			positiveNumber(value)
-			{
-				return value > 0 || 'El numero debe ser positivo';
-			}
 		}
 	}),
 	methods: {
@@ -60,7 +56,7 @@ export default {
 		clear()
 		{
 			this.currentStore.id = undefined;
-			this.currentStore.code = "";
+			this.currentStore.code = '';
 			this.$refs.form.resetValidation();
 		}
 	},

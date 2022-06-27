@@ -44,7 +44,7 @@ export default {
 		},
 		save()
 		{
-			if (!!!this.currentCouponCategory.id)
+			if (!!!this.currentCoupon.id)
 			{
 				this.$emit('onCreate');
 			}
@@ -55,17 +55,17 @@ export default {
 		},
 		clear()
 		{
-			this.currentCouponCategory.id = undefined;
-			this.currentCouponCategory.name = '';
+			this.currentCoupon.id = undefined;
+			this.currentCoupon.name = '';
 			this.$refs.form.resetValidation();
 		}
 	},
 	computed: {
-		...mapState('couponCategory', ['currentCouponCategory']),
+		...mapState('coupons', ['currentCoupon']),
 
 		formTitle()
 		{
-			return !!this.currentCouponCategory.id ? 'Editar categoría' : 'Nueva categoría';
+			return !!this.currentCoupon.id ? 'Editar cupón' : 'Nuevo cupón';
 		},
 	},
 	beforeCreate()

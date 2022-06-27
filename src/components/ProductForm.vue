@@ -34,7 +34,7 @@
 
 <script>
 import {mapState} from "vuex";
-import {Html5Qrcode} from "html5-qrcode";
+import {Html5Qrcode, Html5QrcodeSupportedFormats} from "html5-qrcode";
 
 export default {
 	name: "ProductForm",
@@ -105,6 +105,11 @@ export default {
 				{
 					fps: 10,    // Optional, frame per seconds for qr code scanning
 					//qrbox: {width: 250, height: 250}  // Optional, if you want bounded box UI
+					formatsToSupport: [
+						Html5QrcodeSupportedFormats.UPC_A,
+						Html5QrcodeSupportedFormats.UPC_E,
+						Html5QrcodeSupportedFormats.UPC_EAN_EXTENSION
+					]
 				}, this.onScanSuccess, () =>
 				{
 				});
