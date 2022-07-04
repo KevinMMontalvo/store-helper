@@ -119,7 +119,7 @@ export default {
 		openStoresDialog(item)
 		{
 			this.$store.dispatch("stores/getStores");
-			this.$store.dispatch("productByStores/getProductByStores", item.id);
+			this.$store.dispatch("productByStores/getStoresByProduct", item.id);
 			this.$store.commit('products/setCurrentProduct', Object.assign({}, item));
 			this.showStoresDialog = true;
 		},
@@ -228,7 +228,7 @@ export default {
 			let store = this.$store;
 
 			data.executing = true;
-			axios.delete(`products/${data.deleteItemId}`).then(function (response)
+			axios.delete(`products/${data.deleteItemId}`).then(function ()
 			{
 				data.showDeleteDialog = false;
 				store.dispatch("products/getProducts");
@@ -252,9 +252,7 @@ export default {
 		},
 		searchBarcode()
 		{
-			let data = this.$data;
 			let store = this.$store;
-			let current = this.currentProduct;
 
 			axios.get(`products/productInfo?barcode=${this.currentProduct.barcode}`).then(function (response)
 			{
@@ -289,7 +287,7 @@ export default {
 
 			data.executing = true;
 			console.log(JSON.stringify(this.productByStores));
-			axios.post('productByStores/createMultiple', this.productByStores).then(function (response)
+			axios.post('productByStores/createMultiple', this.productByStores).then(function ()
 			{
 				data.showStoresDialog = false;
 				store.commit('products/setCurrentProduct', {});

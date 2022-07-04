@@ -16,8 +16,7 @@ export default {
             state.currentCoupon = data;
         }
     },
-    getters: {
-    },
+    getters: {},
     actions: {
         getCoupons({commit, rootState})
         {
@@ -31,7 +30,27 @@ export default {
                 commit('setCoupons', []);
                 rootState.message = {
                     visible: true,
-                    text: 'Error al consultar las cupones',
+                    text: 'Error al consultar los cupones',
+                    color: 'error'
+                };
+                console.error(error.response);
+            });
+        },
+        getCouponsByProductIdAndStoreId({commit, rootState}, params)
+        {
+            commit('setCoupons', undefined);
+
+            console.log(params);
+            axios.get('coupons/searchByProductIdAndStoreId', {params}).then(function (response)
+            {
+                let coupons = response.data;
+                commit('setCoupons', coupons);
+            }).catch(function (error)
+            {
+                commit('setCoupons', []);
+                rootState.message = {
+                    visible: true,
+                    text: 'Error al consultar los cupones',
                     color: 'error'
                 };
                 console.error(error.response);

@@ -19,7 +19,7 @@ const routes = [
         component: Home
     },
     {
-        path: '/customer',
+        path: '/customer/:id?',
         name: 'Customer',
         component: Customer
     },

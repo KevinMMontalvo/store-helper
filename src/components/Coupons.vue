@@ -61,6 +61,7 @@ export default {
 		openUpdateDialog(item)
 		{
 			this.$store.commit('coupons/setCurrentCoupon', Object.assign({}, item));
+			this.$store.dispatch('productByStores/getProductsByStore', item.storeId);
 			this.showFormDialog = true;
 		},
 		openDeleteDialog(item)
@@ -88,6 +89,8 @@ export default {
 			let store = this.$store;
 			let refs = this.$refs;
 			let currentCoupon = Object.assign({}, this.currentCoupon);
+			delete currentCoupon.couponCategory;
+			delete currentCoupon.product;
 
 			data.executing = true;
 			axios.post('coupons', currentCoupon).then(function ()
@@ -120,6 +123,8 @@ export default {
 			let store = this.$store;
 			let refs = this.$refs;
 			let currentCoupon = Object.assign({}, this.currentCoupon);
+			delete currentCoupon.couponCategory;
+			delete currentCoupon.product;
 
 			data.executing = true;
 
@@ -152,7 +157,7 @@ export default {
 			let store = this.$store;
 
 			data.executing = true;
-			axios.delete(`coupons/${data.deleteItemId}`).then(function (response)
+			axios.delete(`coupons/${data.deleteItemId}`).then(function ()
 			{
 				data.showDeleteDialog = false;
 				store.dispatch("coupons/getCoupons");
