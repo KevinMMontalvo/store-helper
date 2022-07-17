@@ -46,8 +46,6 @@ export default {
 
 			axios.post('authentication', body).then(function (response)
 			{
-				console.log(response);
-
 				if (data.rememberMe)
 				{
 					let now = new Date();
