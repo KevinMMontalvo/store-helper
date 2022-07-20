@@ -256,6 +256,7 @@ export default {
 			if (!this.$cookies.isKey('coupons'))
 			{
 				this.savedCoupons = [];
+				return;
 			}
 
 			this.savedCoupons = JSON.parse(this.$cookies.get('coupons'));
