@@ -17,7 +17,7 @@
 			<!--					<v-icon color="white" x-large>search</v-icon>-->
 			<!--				</template>-->
 			<!--			</v-text-field>-->
-
+			{{ savedCoupons }}
 			<v-autocomplete v-model="selectedProductId" :items="items" :loading="executing"
 							:search-input.sync="searchText" chips clearable hide-details hide-selected item-text="name"
 							item-value="id" label="Ingrese el nombre o código de barras" solo>
@@ -129,7 +129,8 @@
 			<v-card>
 				<v-card-title>Seleccione una tienda</v-card-title>
 				<v-card-text>
-					<v-select v-model="currentStore" class="store-select pt-6" label="Tienda" :items="stores" item-value="id"
+					<v-select v-model="currentStore" class="store-select pt-6" label="Tienda" :items="stores"
+							  item-value="id"
 							  item-text="code" @input="setCurrentStore"></v-select>
 				</v-card-text>
 			</v-card>
