@@ -9,6 +9,7 @@
 					  item-text="code"></v-select>
 		</v-app-bar>
 		<div class="d-flex flex-column mx-5">
+			{{ JSON.stringify(savedCoupons) }}
 			<div class="d-flex text-h5 text-center mb-5 white--text">Ingrese el nombre del producto a buscar</div>
 			<!--			<v-text-field class="d-flex text-h4" v-model.trim="searchText" color="primary" background-color="white"-->
 			<!--						  type="text" :rules="[]" @click:append-outer="searchProduct" @keydown.enter="searchProduct"-->
@@ -17,7 +18,7 @@
 			<!--					<v-icon color="white" x-large>search</v-icon>-->
 			<!--				</template>-->
 			<!--			</v-text-field>-->
-			{{ savedCoupons }}
+
 			<v-autocomplete v-model="selectedProductId" :items="items" :loading="executing"
 							:search-input.sync="searchText" chips clearable hide-details hide-selected item-text="name"
 							item-value="id" label="Ingrese el nombre o código de barras" solo>
