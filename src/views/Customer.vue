@@ -59,15 +59,15 @@
 				<v-card-subtitle class="mt-2">Ubicación:</v-card-subtitle>
 				<v-card-text class="d-flex flex-column">
 					<div>
-						<span class="font-weight-bold">Pasillo: </span>
+						<span class="font-weight-bold">Aisle: </span>
 						{{ !!productByStores ? productByStores.find(p => p.id === currentStore).place.section : '' }}
 					</div>
 					<div>
-						<span class="font-weight-bold">Estante: </span>
+						<span class="font-weight-bold">Shelf: </span>
 						{{ !!productByStores ? productByStores.find(p => p.id === currentStore).place.rack : '' }}
 					</div>
 					<div>
-						<span class="font-weight-bold">Nivel: </span>
+						<span class="font-weight-bold">Level: </span>
 						{{ !!productByStores ? productByStores.find(p => p.id === currentStore).place.floor : '' }}
 					</div>
 				</v-card-text>
