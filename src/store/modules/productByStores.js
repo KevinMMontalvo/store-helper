@@ -4,7 +4,6 @@ export default {
     namespaced: true,
     state: {
         productByStores: undefined,
-        currentProduct: {}
     },
     mutations: {
         setProductByStores(state, data)

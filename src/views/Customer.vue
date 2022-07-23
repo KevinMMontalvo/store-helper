@@ -56,7 +56,22 @@
 				<v-card-title>
 					{{ !!selectedProductId ? items.find(i => i.id === selectedProductId).name : '' }}
 				</v-card-title>
-				<v-card-subtitle class="mt-2">Cupones disponibles:</v-card-subtitle>
+				<v-card-subtitle class="mt-2">Ubicación:</v-card-subtitle>
+				<v-card-text class="d-flex flex-column">
+					<div>
+						<span class="font-weight-bold">Pasillo: </span>
+						{{ !!productByStores ? productByStores.find(p => p.id === currentStore).place.section : '' }}
+					</div>
+					<div>
+						<span class="font-weight-bold">Estante: </span>
+						{{ !!productByStores ? productByStores.find(p => p.id === currentStore).place.rack : '' }}
+					</div>
+					<div>
+						<span class="font-weight-bold">Nivel: </span>
+						{{ !!productByStores ? productByStores.find(p => p.id === currentStore).place.floor : '' }}
+					</div>
+				</v-card-text>
+				<v-card-subtitle v-if="coupons.length > 0" class="mt-2">Cupones disponibles:</v-card-subtitle>
 				<v-card-text>
 					<v-list>
 						<template v-for="coupon in coupons">
@@ -125,7 +140,7 @@
 				</v-card-actions>
 			</v-card>
 		</v-dialog>
-		<v-dialog v-model="showStoreSelectDialog" width="30%" persistent>
+		<v-dialog v-model="showStoreSelectDialog" width="350px" persistent>
 			<v-card>
 				<v-card-title>Seleccione una tienda</v-card-title>
 				<v-card-text>
@@ -199,6 +214,7 @@ export default {
 			};
 
 			this.$store.dispatch('coupons/getCouponsByProductIdAndStoreId', params);
+			this.$store.dispatch('productByStores/getStoresByProduct', this.selectedProductId);
 			this.showCouponsDialog = true;
 		},
 		saveCoupon(couponId)
@@ -268,7 +284,8 @@ export default {
 	computed: {
 		...mapState('stores', ['stores']),
 		...mapState('coupons', ['coupons']),
-
+		...mapState('products', ['currentProduct']),
+		...mapState('productByStores', ['productByStores']),
 	},
 	watch: {
 		searchText(value)

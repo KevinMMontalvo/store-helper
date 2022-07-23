@@ -31,7 +31,25 @@ export default {
                 commit('setProducts', []);
                 rootState.message = {
                     visible: true,
-                    text: 'Error al consultar las tiendas',
+                    text: 'Error al consultar los productos',
+                    color: 'error'
+                };
+                console.error(error.response);
+            });
+        },
+        getProductById({commit, rootState}, productId)
+        {
+            commit('setCurrentProduct', undefined);
+            axios.get(`products/${productId}`).then(function (response)
+            {
+                let product = response.data;
+                commit('setCurrentProduct', product);
+            }).catch(function (error)
+            {
+                commit('setCurrentProduct', {});
+                rootState.message = {
+                    visible: true,
+                    text: 'Error al consultar el producto',
                     color: 'error'
                 };
                 console.error(error.response);

@@ -1,10 +1,13 @@
 <template>
 	<div>
-		<v-data-table :headers="headers" :items="products" class="elevation-1 ma-3" :loading="products===undefined">
+
+		<v-data-table :headers="headers" :items="products" :search="search" class="elevation-1 ma-3" :loading="products===undefined">
 			<template v-slot:top>
 				<v-toolbar flat>
 					<v-toolbar-title>Productos</v-toolbar-title>
 					<v-divider class="mx-4" inset vertical></v-divider>
+					<v-spacer></v-spacer>
+					<v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details></v-text-field>
 					<v-spacer></v-spacer>
 					<v-dialog v-model="showFormDialog" width="90%">
 						<template v-slot:activator="{ on, attrs }">
@@ -90,10 +93,11 @@ export default {
 		headers: [
 			{text: 'Código', value: 'barcode'},
 			{text: 'Nombre', value: 'name'},
-			{text: 'Tiendas', value: 'stores'},
+			//{text: 'Tiendas', value: 'stores'},
 			{text: 'Acciones', value: 'actions', sortable: false},
 		],
 		deleteItemId: 0,
+		search: '',
 		rules: {
 			required(value)
 			{
@@ -258,7 +262,7 @@ export default {
 			{
 				let currentProduct = Object.assign({}, store.state.products.currentProduct);
 				currentProduct.name = response.data.product.name;
-				store.commit('products/setCurrentProduct', currentProduct)
+				store.commit('products/setCurrentProduct', currentProduct);
 			}).catch(function (error)
 			{
 				console.error(error);
