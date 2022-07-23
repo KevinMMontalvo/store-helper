@@ -71,7 +71,7 @@
 						{{ !!productByStores ? productByStores.find(p => p.id === currentStore).place.floor : '' }}
 					</div>
 				</v-card-text>
-				<v-card-subtitle v-if="coupons.length > 0" class="mt-2">Cupones disponibles:</v-card-subtitle>
+				<v-card-subtitle v-if="!!coupons && coupons.length > 0" class="mt-2">Cupones disponibles:</v-card-subtitle>
 				<v-card-text>
 					<v-list>
 						<template v-for="coupon in coupons">
