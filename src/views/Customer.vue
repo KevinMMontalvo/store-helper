@@ -18,7 +18,7 @@
 			<!--				</template>-->
 			<!--			</v-text-field>-->
 
-			<v-autocomplete v-model="selectedProductId" :items="items" :loading="executing"
+			<v-autocomplete v-model="selectedProductId" :items="items" :loading="executing" class="text-h5"
 							:search-input.sync="searchText" chips clearable hide-details hide-selected item-text="name"
 							item-value="id" label="Ingrese el nombre o código de barras" solo>
 				<template v-slot:no-data>
@@ -29,11 +29,11 @@
 					</v-list-item>
 				</template>
 				<template v-slot:selection="{ attr, on, item, selected }">
-					<v-chip v-bind="attr" :input-value="selected" color="blue-grey" class="white--text" v-on="on">
+					<v-chip v-bind="attr" :input-value="selected" color="primary" class="white--text" v-on="on" >
 						<!--						<v-icon left>-->
 						<!--							mdi-bitcoin-->
 						<!--						</v-icon>-->
-						<span v-text="item.name"></span>
+						<span v-text="item.name.length > 25 ? item.name.slice(0,25)+'...':item.name"></span>
 					</v-chip>
 				</template>
 				<template v-slot:item="{ item }">
@@ -49,6 +49,7 @@
 					<!--					</v-list-item-action>-->
 				</template>
 			</v-autocomplete>
+
 			<!--			<a class="d-flex text-center mb-5 white&#45;&#45;text">O buscar codigo de barras</a>-->
 		</div>
 		<v-dialog v-model="showCouponsDialog">
@@ -325,7 +326,7 @@ export default {
 .store-select
 {
 	/*max-width: 22;*/
-	max-width: calc(5vw + 12vh);
+	/*max-width: calc(5vw + 12vh);*/
 }
 
 .conditions
