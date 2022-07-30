@@ -4,12 +4,12 @@
 			<!--			<v-app-bar-nav-icon @click.stop="menuVisible = !menuVisible"></v-app-bar-nav-icon>-->
 			<v-toolbar-title>FINDOU</v-toolbar-title>
 			<v-spacer/>
-			<span class="mr-1">Tienda: </span>
+			<span class="mr-1">Store: </span>
 			<v-select v-model="currentStore" class="store-select pt-6" :items="stores" item-value="id"
 					  item-text="code"></v-select>
 		</v-app-bar>
 		<div class="d-flex flex-column mx-5">
-			<div class="d-flex text-h5 text-center mb-5 white--text">Ingrese el nombre del producto a buscar</div>
+			<div class="d-flex text-h5 text-center mb-5 white--text">Write the product to search</div>
 			<!--			<v-text-field class="d-flex text-h4" v-model.trim="searchText" color="primary" background-color="white"-->
 			<!--						  type="text" :rules="[]" @click:append-outer="searchProduct" @keydown.enter="searchProduct"-->
 			<!--						  outlined>-->
@@ -20,16 +20,16 @@
 
 			<v-autocomplete v-model="selectedProductId" :items="items" :loading="executing" class="text-h5"
 							:search-input.sync="searchText" chips clearable hide-details hide-selected item-text="name"
-							item-value="id" label="Ingrese el nombre o código de barras" solo>
+							item-value="id" label="Write name or barcode" solo>
 				<template v-slot:no-data>
 					<v-list-item>
 						<v-list-item-title>
-							No hay resultados
+							No results
 						</v-list-item-title>
 					</v-list-item>
 				</template>
 				<template v-slot:selection="{ attr, on, item, selected }">
-					<v-chip v-bind="attr" :input-value="selected" color="primary" class="white--text" v-on="on" >
+					<v-chip v-bind="attr" :input-value="selected" color="primary" class="white--text" v-on="on">
 						<!--						<v-icon left>-->
 						<!--							mdi-bitcoin-->
 						<!--						</v-icon>-->
@@ -54,10 +54,16 @@
 		</div>
 		<v-dialog v-model="showCouponsDialog">
 			<v-card>
+				<v-toolbar color="primary" dark>
+					<v-btn class="mr-2" icon dark @click="showCouponsDialog = false">
+						<v-icon>mdi-close</v-icon>
+					</v-btn>
+					Product information
+				</v-toolbar>
 				<v-card-title>
 					{{ !!selectedProductId ? items.find(i => i.id === selectedProductId).name : '' }}
 				</v-card-title>
-				<v-card-subtitle class="mt-2">Ubicación:</v-card-subtitle>
+				<v-card-subtitle class="mt-2">Location:</v-card-subtitle>
 				<v-card-text class="d-flex flex-column">
 					<div>
 						<span class="font-weight-bold">Aisle: </span>
@@ -72,7 +78,8 @@
 						{{ !!productByStores ? productByStores.find(p => p.id === currentStore).place.floor : '' }}
 					</div>
 				</v-card-text>
-				<v-card-subtitle v-if="!!coupons && coupons.length > 0" class="mt-2">Cupones disponibles:</v-card-subtitle>
+				<v-card-subtitle v-if="!!coupons && coupons.length > 0" class="mt-2">Available coupons:
+				</v-card-subtitle>
 				<v-card-text>
 					<v-list>
 						<template v-for="coupon in coupons">
@@ -109,18 +116,15 @@
 		<v-dialog v-model="showSavedCouponsDialog">
 			<v-card>
 				<v-card-title>
-					Cupones guardados
+					Saved coupons
 				</v-card-title>
-				<!--				<v-card-subtitle class="mt-2">Cupones guardados:</v-card-subtitle>-->
 				<v-card-text>
 					<v-list>
 						<template v-for="coupon in coupons">
 							<v-list-item v-if="savedCoupons.includes(coupon.id)">
 								<v-list-item-content>
 									<v-list-item-title>{{ coupon.text }}</v-list-item-title>
-									<v-list-item-subtitle class="conditions">{{
-											coupon.conditions
-										}}
+									<v-list-item-subtitle class="conditions">{{ coupon.conditions }}
 									</v-list-item-subtitle>
 								</v-list-item-content>
 								<v-list-item-action>
@@ -143,7 +147,7 @@
 		</v-dialog>
 		<v-dialog v-model="showStoreSelectDialog" width="350px" persistent>
 			<v-card>
-				<v-card-title>Seleccione una tienda</v-card-title>
+				<v-card-title>Select a store</v-card-title>
 				<v-card-text>
 					<v-select v-model="currentStore" class="store-select pt-6" label="Tienda" :items="stores"
 							  item-value="id"
@@ -199,7 +203,7 @@ export default {
 				console.error(error.response);
 				store.state.message = {
 					visible: true,
-					text: 'Hubo un error al realizar la búsqueda',
+					text: 'There was an error performing the search',
 					color: 'error'
 				};
 			}).then(function ()
@@ -248,7 +252,7 @@ export default {
 			{
 				this.$store.state.message = {
 					visible: true,
-					text: 'Cupón guardado',
+					text: 'Saved coupon',
 					color: 'success'
 				};
 			}
@@ -256,7 +260,7 @@ export default {
 			{
 				this.$store.state.message = {
 					visible: true,
-					text: 'Cupón eliminado',
+					text: 'Deleted coupon',
 					color: 'success'
 				};
 			}
@@ -305,6 +309,14 @@ export default {
 			{
 				this.searchCoupons();
 			}
+		},
+		showCouponsDialog(value)
+		{
+			if (!value)
+			{
+				this.selectedProductId = null;
+				this.searchText = '';
+			}
 		}
 	},
 	beforeMount()
@@ -326,7 +338,7 @@ export default {
 .store-select
 {
 	/*max-width: 22;*/
-	/*max-width: calc(5vw + 12vh);*/
+	max-width: calc(5vw + 12vh);
 }
 
 .conditions
